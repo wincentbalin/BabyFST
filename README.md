@@ -30,10 +30,9 @@ inputData.addEventListener('input', delay(function(event) {
   if (input === '') {
     outputData.textContent = '';
   } else {
-    var output = foma_apply_down(BabyFST, input);
-    if (output) {
-      outputData.textContent = output;
-    }
+    outputData.textContent = input.split('\n').map(function(line) {
+      return '' + foma_apply_down(BabyFST, line);
+    }).join('\n');
   }
 }, inputTimeout));
 </script>
