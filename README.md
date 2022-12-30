@@ -41,4 +41,4 @@ inputData.addEventListener('input', delay(function(event) {
 
 # Main repository
 
-The main repository of this project is https://github.com/asahala/BabyFST
+The main repository of this project is <a href="https://github.com/asahala/BabyFST">asahala/BabyFST</a>
