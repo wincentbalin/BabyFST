@@ -19,6 +19,8 @@ function foma_apply_dn(Net, inString, Position, State, outString, Reply) {
     }
     var match = 0;
     for (var len = 0; len <= Net.maxlen && len <= inString.length - Position; len++) {
+        console.log('State:', State);
+        console.log('Input:', inString.substr(Position,len));
         var key = State + '|' + inString.substr(Position,len);
         for (var key2 in Net.t[key]) {
             for (var targetState in Net.t[key][key2]) {
@@ -26,6 +28,7 @@ function foma_apply_dn(Net, inString, Position, State, outString, Reply) {
                     return;
                 }
                 var outputSymbol = Net.t[key][key2][targetState];
+                console.log('Output symbol:', outputSymbol);
                 match = 1;
                 if (outputSymbol === '@UN@') { outputSymbol = '?'; }
                 foma_apply_dn(Net, inString, Position+len, targetState, outString + outputSymbol, Reply);
@@ -33,6 +36,8 @@ function foma_apply_dn(Net, inString, Position, State, outString, Reply) {
         }
     }
     if (match === 0 && Net.s[inString.substr(Position,1)] == null && inString.length > Position) {
+        console.log('State:', State);
+        console.log('Input:', '@ID@');
         key = State + '|' + '@ID@';
         for (key2 in Net.t[key]) {
             for (targetState in Net.t[key][key2]) {
@@ -40,6 +45,7 @@ function foma_apply_dn(Net, inString, Position, State, outString, Reply) {
                     return;
                 }
                 outputSymbol = Net.t[key][key2][targetState];
+                console.log('Output symbol:', outputSymbol);
                 if (outputSymbol === '@UN@') { outputSymbol = '?'; }
 	        if (outputSymbol === '@ID@') { outputSymbol = inString.substr(Position,1); }
                 foma_apply_dn(Net, inString, Position+1, targetState, outString + outputSymbol, Reply);
